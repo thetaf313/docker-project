@@ -1,0 +1,10 @@
+# Ignorer les fichiers inutiles dans l'image Docker
+.git
+.gitignore
+.env
+vendor
+*.log
+*.md
+Dockerfile
+docker-compose.yml
+nginx.conf

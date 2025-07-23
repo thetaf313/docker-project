@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: appdaf-api
+    env: docker
+    plan: free
+    repo: https://github.com/thetaf313/docker-project.git
+    region: frankfurt
+    dockerContext: ./php-code
+    dockerfilePath: ./php-code/Dockerfile
+    envVars:
+      - key: PORT
+        value: "80" # le port interne de nginx ou php-fpm
+      - key: DB_HOST
+        fromService:
+          type: pserv
+          name: appdaf-db
+          property: host
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_NAME
+        value: appdaf_db
+      - key: DB_USER
+        value: appdaff
+      - key: DB_PASS
+        value: appdaff
+
+  - type: pserv
+    name: appdaf-db
+    env: postgres
+    plan: free
+    region: frankfurt
+    postgresMajorVersion: 15
+    envVars:
+      - key: POSTGRES_USER
+        value: appdaff
+      - key: POSTGRES_PASSWORD
+        value: appdaff
+      - key: POSTGRES_DB
+        value: appdaf_db
